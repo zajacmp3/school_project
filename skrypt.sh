@@ -1,8 +1,9 @@
 #!/bin/sh
 
+#Entering basic information
 echo "Choose file/folder that you want to backup"
 read file
-echo "Do backup [1]Local or [2]Remote"
+echo "Do backup [1]Local or [2]Remote(FTP)"
 read letter
 if [ $letter -eq 2 ]; then
 echo "Please insert your FTP data"
@@ -17,6 +18,7 @@ echo "Choose method of backup"
 echo "[1].ZIP [2].TAR.GZ"
 read method
 NOWDATE=`date +%d%m%y`
+#Staring packing with choosen method
 if [ $method -eq 2 ]; then
 tar -cvzf /usr/backup/$NOWDATE.tar.gz $file
 fi
@@ -24,6 +26,7 @@ if [ $method -eq 1 ]; then
 zip -R /usr/backup/$NOWDATE.zip $file
 fi
 echo Packing complete
+#Connecting to FTP server and uploading files
 if [ $letter -eq 2 ]; then
 if [ $method -eq 1 ]; then
 ftp -n -i $host <<EOF
@@ -40,6 +43,7 @@ put /usr/backup/$NOWDATE.tar.gz $NOWDATE.tar.gz
 EOF
 fi
 fi
+#Moving packed files to choosen location
 if [ $letter -eq 1 ]; then
 echo "Choose your backup folder"
 read folder
