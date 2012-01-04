@@ -1,0 +1,5 @@
+School Project is something that I had to do for school obviously.
+It contains bash script that is made to backup data i two methods - .zip or .tar.gz
+It can also upload data to a remote ftp server if we wish to.
+It contains mostly basic libriaries - only thing that a fresh linux user is needing is zip.
+Testing platform - Centos 5.6
