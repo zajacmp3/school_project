@@ -4,11 +4,19 @@ echo "Choose file/folder that you want to backup"
 read file
 echo "Do backup [1]Local or [2]Remote"
 read letter
+if [ $letter -eq 2 ]; then
+echo "Please insert your FTP data"
+echo "FTP HOST:"
+read host
+echo "USERNAME"
+read username
+echo "PASSWORD"
+read password
+fi
 echo "Choose method of backup"
 echo "[1].ZIP [2].TAR.GZ"
 read method
 NOWDATE=`date +%d%m%y`
-
 if [ $method -eq 2 ]; then
 tar -cvzf /usr/backup/$NOWDATE.tar.gz $file
 fi
@@ -18,15 +26,15 @@ fi
 echo Packing complete
 if [ $letter -eq 2 ]; then
 if [ $method -eq 1 ]; then
-ftp -n -i infug.net78.net <<EOF
-user a4860405 haslo6
+ftp -n -i $host <<EOF
+user $username $password
 put /usr/backup/$NOWDATE.zip $NOWDATE.zip
 !
 EOF
 fi
 if [ $method -eq 2 ]; then
-ftp -n -i infug.net78.net <<EOF
-user a4860405 haslo6
+ftp -n -i $host <<EOF
+user $username $password
 put /usr/backup/$NOWDATE.tar.gz $NOWDATE.tar.gz
 !
 EOF
@@ -37,9 +45,8 @@ echo "Choose your backup folder"
 read folder
 mv /usr/backup/$NOWDATE.tar.gz &folder
 fi
-#mysqldump --user=root --password=Creative6 wordpress >/usr/backup/$NOWDATE.sql
-#clear
-#clear
-#wput /usr/backup/$NOWDATE.sql ftp://admin@infugskrypt.cba.pl:haslo@infugskrypt.cba.pl/
-#clear
 echo COMPLETE
+
+#Test host infug.net78.net
+#Test username a4860405
+#Test password haslo6
